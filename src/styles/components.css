@@ -1,0 +1,132 @@
+/*
+ * Buttons and links. Square corners, 1px borders, uppercase tracked labels.
+ * Compose: <button class="btn btn-primary btn-block md:w-auto">
+ */
+@layer components {
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: --spacing(2);
+    min-height: --spacing(12);
+    padding-inline: --spacing(8);
+    border: 1px solid transparent;
+    border-radius: 0;
+    font-size: var(--text-button);
+    line-height: var(--text-button--line-height);
+    letter-spacing: var(--text-button--letter-spacing);
+    font-weight: 500;
+    text-transform: uppercase;
+    white-space: nowrap;
+    cursor: pointer;
+    transition-property: color, background-color, border-color;
+    transition-duration: var(--duration-base);
+    transition-timing-function: var(--ease-luxe);
+
+    &:disabled,
+    &[aria-disabled="true"] {
+      cursor: not-allowed;
+      background-color: var(--color-surface-strong);
+      border-color: var(--color-surface-strong);
+      color: var(--color-subtle);
+    }
+  }
+
+  .btn-primary {
+    background-color: var(--color-ink);
+    border-color: var(--color-ink);
+    color: var(--color-paper);
+
+    &:hover:not(:disabled) {
+      background-color: var(--color-ink-hover);
+      border-color: var(--color-ink-hover);
+    }
+  }
+
+  .btn-secondary {
+    background-color: transparent;
+    border-color: var(--color-ink);
+    color: var(--color-ink);
+
+    &:hover:not(:disabled) {
+      background-color: var(--color-ink);
+      color: var(--color-paper);
+    }
+  }
+
+  /* For use over imagery */
+  .btn-inverse {
+    background-color: transparent;
+    border-color: var(--color-paper);
+    color: var(--color-paper);
+
+    &:hover:not(:disabled) {
+      background-color: var(--color-paper);
+      color: var(--color-ink);
+    }
+  }
+
+  .btn-sm {
+    min-height: --spacing(10);
+    padding-inline: --spacing(5);
+  }
+
+  .btn-block {
+    width: 100%;
+  }
+
+  /* Square icon-only button (menu, search, bag) */
+  .btn-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: --spacing(11);
+    height: --spacing(11);
+    cursor: pointer;
+  }
+
+  /* Inline text link: underlined, underline lifts on hover */
+  .link {
+    text-decoration-line: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.25em;
+    text-decoration-color: currentColor;
+    transition: text-decoration-color var(--duration-base) var(--ease-luxe);
+
+    &:hover {
+      text-decoration-color: transparent;
+    }
+  }
+
+  /* Navigation and footer link: plain, underline appears on hover */
+  .link-quiet {
+    text-decoration-line: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.25em;
+    text-decoration-color: transparent;
+    transition: text-decoration-color var(--duration-base) var(--ease-luxe);
+
+    &:hover,
+    &[aria-current="page"] {
+      text-decoration-color: currentColor;
+    }
+  }
+
+  /* Editorial call to action: uppercase, tracked, underlined */
+  .link-cta {
+    display: inline-block;
+    padding-block: --spacing(1);
+    font-size: var(--text-button);
+    letter-spacing: var(--text-button--letter-spacing);
+    font-weight: 500;
+    text-transform: uppercase;
+    text-decoration-line: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.4em;
+    transition: text-decoration-color var(--duration-base) var(--ease-luxe);
+
+    &:hover {
+      text-decoration-color: transparent;
+    }
+  }
+}

@@ -1,0 +1,211 @@
+/* Typography roles */
+@utility type-display {
+  font-family: var(--font-serif);
+  font-size: var(--text-display);
+  line-height: var(--text-display--line-height);
+  letter-spacing: var(--text-display--letter-spacing);
+  font-weight: 400;
+}
+
+@utility type-h1 {
+  font-size: var(--text-h1);
+  line-height: var(--text-h1--line-height);
+  letter-spacing: var(--text-h1--letter-spacing);
+  font-weight: 400;
+}
+
+@utility type-h2 {
+  font-size: var(--text-h2);
+  line-height: var(--text-h2--line-height);
+  font-weight: 400;
+}
+
+@utility type-h3 {
+  font-size: var(--text-h3);
+  line-height: var(--text-h3--line-height);
+  font-weight: 500;
+}
+
+@utility type-body {
+  font-size: var(--text-body);
+  line-height: var(--text-body--line-height);
+}
+
+@utility type-caption {
+  font-size: var(--text-caption);
+  line-height: var(--text-caption--line-height);
+  letter-spacing: var(--text-caption--letter-spacing);
+}
+
+@utility type-eyebrow {
+  font-size: var(--text-eyebrow);
+  line-height: var(--text-eyebrow--line-height);
+  letter-spacing: var(--text-eyebrow--letter-spacing);
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+/* Containers */
+@utility container-page {
+  width: 100%;
+  max-width: var(--container-page);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+@utility container-content {
+  width: 100%;
+  max-width: var(--container-content);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+@utility container-prose {
+  width: 100%;
+  max-width: var(--container-prose);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* Breaks a child out of its container to the viewport edges */
+@utility full-bleed {
+  width: 100vw;
+  margin-inline: calc(50% - 50vw);
+}
+
+/* Vertical rhythm between page sections */
+@utility section {
+  padding-block: var(--section-y);
+}
+
+/* Layout primitives; tune spacing with [--stack-gap:--spacing(8)] etc. */
+@utility stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--stack-gap, --spacing(4));
+}
+
+@utility cluster {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--cluster-gap, --spacing(4));
+}
+
+/* Product listing: 2 → 3 → 4 columns, tight columns, generous rows */
+@utility product-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: var(--grid-gap);
+  row-gap: --spacing(10);
+
+  @variant md {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  @variant lg {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    row-gap: --spacing(14);
+  }
+}
+
+/* Editorial grid: 4 columns on phones, 12 from tablet; children use col-span-* */
+@utility editorial-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--gutter);
+
+  @variant md {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+}
+
+/* Horizontal snap carousel: swipe on touch, scroll on desktop */
+@utility scroll-row {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 72%;
+  gap: var(--grid-gap);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+
+  & > * {
+    scroll-snap-align: start;
+  }
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  @variant md {
+    grid-auto-columns: calc((100% - 2 * var(--grid-gap)) / 3);
+  }
+
+  @variant lg {
+    grid-auto-columns: calc((100% - 3 * var(--grid-gap)) / 4);
+  }
+}
+
+/* Product gallery: swipeable strip on phones, lead image + 2-column grid from tablet up */
+@utility gallery {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 88%;
+  gap: var(--grid-gap);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+
+  & > * {
+    scroll-snap-align: start;
+  }
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  @variant md {
+    grid-auto-flow: row;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    overflow: visible;
+
+    & > :first-child {
+      grid-column: span 2;
+    }
+  }
+}
+
+/* Image frame: neutral backdrop, cropped media */
+@utility media {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--color-surface);
+
+  & > img,
+  & > video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+/* Hero frame: portrait on phones, landscape from tablet up */
+@utility hero {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  aspect-ratio: var(--aspect-product);
+  max-height: calc(100svh - var(--header-h));
+
+  @variant md {
+    aspect-ratio: var(--aspect-landscape);
+  }
+}
+
+/* Hairline divider */
+@utility hairline {
+  border-top: 1px solid var(--color-line);
+}

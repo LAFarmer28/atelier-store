@@ -1,0 +1,98 @@
+/*
+ * Design tokens.
+ * Monochrome, image-led, square-cornered. Color is reserved for imagery;
+ * the UI itself stays black, white and neutral grey.
+ */
+
+/* Responsive values that Tailwind tokens point at (see @theme inline below). */
+:root {
+  --gutter: 1rem;
+  --grid-gap: 0.25rem;
+  --section-y: clamp(3rem, 2rem + 4vw, 7.5rem);
+  --header-h: 3.5rem;
+
+  @media (width >= 48rem) {
+    --gutter: 1.5rem;
+    --header-h: 4rem;
+  }
+
+  @media (width >= 80rem) {
+    --gutter: 2.5rem;
+    --grid-gap: 0.5rem;
+  }
+}
+
+@theme {
+  /* Colors: the default palette is replaced so only these tokens exist */
+  --color-*: initial;
+  --color-transparent: transparent;
+  --color-current: currentColor;
+  --color-ink: #000000;
+  --color-ink-hover: #2b2b2b;
+  --color-paper: #ffffff;
+  --color-surface: #f5f5f5; /* product media backgrounds, quiet panels */
+  --color-surface-strong: #ebebeb;
+  --color-line: #e0e0e0; /* hairlines and dividers */
+  --color-line-strong: #000000;
+  --color-muted: #666666; /* secondary text, 5.7:1 on paper */
+  --color-subtle: #949494; /* disabled and placeholder only */
+  --color-accent: #5e1a1c; /* deep oxblood, used sparingly */
+  --color-error: #b3261e;
+  --color-success: #2f6b3c;
+  --color-scrim: rgb(0 0 0 / 0.35); /* text over imagery */
+
+  /* Type scale: small, quiet UI text; large, fluid editorial headings */
+  --text-display: clamp(2.5rem, 1.5rem + 4vw, 5.5rem);
+  --text-display--line-height: 1;
+  --text-display--letter-spacing: -0.01em;
+  --text-h1: clamp(1.75rem, 1.25rem + 2vw, 3rem);
+  --text-h1--line-height: 1.1;
+  --text-h1--letter-spacing: -0.005em;
+  --text-h2: clamp(1.375rem, 1.125rem + 1vw, 2rem);
+  --text-h2--line-height: 1.2;
+  --text-h3: 1.125rem;
+  --text-h3--line-height: 1.35;
+  --text-body: 0.875rem;
+  --text-body--line-height: 1.6;
+  --text-small: 0.8125rem;
+  --text-small--line-height: 1.5;
+  --text-caption: 0.75rem;
+  --text-caption--line-height: 1.45;
+  --text-caption--letter-spacing: 0.01em;
+  --text-eyebrow: 0.6875rem;
+  --text-eyebrow--line-height: 1.2;
+  --text-eyebrow--letter-spacing: 0.12em;
+  --text-button: 0.75rem;
+  --text-button--line-height: 1;
+  --text-button--letter-spacing: 0.1em;
+
+  --tracking-wide: 0.06em;
+  --tracking-wider: 0.1em;
+  --tracking-widest: 0.14em;
+
+  /* Containers */
+  --container-page: 120rem; /* 1920px: full layouts */
+  --container-content: 90rem; /* 1440px: text-heavy layouts */
+  --container-prose: 42rem; /* readable line length */
+
+  /* Media ratios */
+  --aspect-product: 4 / 5;
+  --aspect-portrait: 3 / 4;
+  --aspect-landscape: 16 / 9;
+
+  --breakpoint-3xl: 120rem;
+
+  --ease-luxe: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --duration-base: 250ms;
+}
+
+/* Tokens that reference runtime values */
+@theme inline {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-cormorant), ui-serif, Georgia, serif;
+
+  --spacing-gutter: var(--gutter);
+  --spacing-grid: var(--grid-gap);
+  --spacing-section: var(--section-y);
+  --spacing-header: var(--header-h);
+}

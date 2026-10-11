@@ -1,6 +1,8 @@
 // Cached catalog reads for Server Components. Results are part of the static
 // prerender; call revalidateTag("catalog") after changing products or stock.
 
+import "server-only";
+
 import { asc, eq, inArray, ne, sql } from "drizzle-orm";
 import { cacheLife, cacheTag } from "next/cache";
 

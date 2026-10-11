@@ -7,6 +7,7 @@ import { asc, eq, inArray, ne, sql } from "drizzle-orm";
 import { cacheLife, cacheTag } from "next/cache";
 
 import { db } from "@/db";
+import { runQuery } from "@/db/query-error";
 import { categories, products } from "@/db/schema";
 import type { Product } from "@/lib/products";
 
@@ -43,10 +44,9 @@ export async function getAllProductSlugs(): Promise<string[]> {
   "use cache";
   cacheCatalog();
 
-  const rows = await db
-    .select({ slug: products.slug })
-    .from(products)
-    .orderBy(asc(products.id));
+  const rows = await runQuery(() =>
+    db.select({ slug: products.slug }).from(products).orderBy(asc(products.id)),
+  );
   return rows.map((row) => row.slug);
 }
 
@@ -54,10 +54,12 @@ export async function getProduct(slug: string): Promise<Product | null> {
   "use cache";
   cacheCatalog();
 
-  const row = await db.query.products.findFirst({
-    where: eq(products.slug, slug),
-    with: withRelations,
-  });
+  const row = await runQuery(() =>
+    db.query.products.findFirst({
+      where: eq(products.slug, slug),
+      with: withRelations,
+    }),
+  );
   return row ? toProduct(row) : null;
 }
 
@@ -67,10 +69,12 @@ export async function getProductsBySlugs(slugs: string[]): Promise<Product[]> {
   cacheCatalog();
 
   if (slugs.length === 0) return [];
-  const rows = await db.query.products.findMany({
-    where: inArray(products.slug, slugs),
-    with: withRelations,
-  });
+  const rows = await runQuery(() =>
+    db.query.products.findMany({
+      where: inArray(products.slug, slugs),
+      with: withRelations,
+    }),
+  );
   const bySlug = new Map(rows.map((row) => [row.slug, toProduct(row)]));
   return slugs.flatMap((slug) => bySlug.get(slug) ?? []);
 }
@@ -89,11 +93,13 @@ async function getRelated(slug: string, categorySlug: string, limit: number) {
     .from(categories)
     .where(eq(categories.slug, categorySlug));
 
-  const rows = await db.query.products.findMany({
-    where: ne(products.slug, slug),
-    with: withRelations,
-    orderBy: [sql`${products.categoryId} = (${categoryId}) desc`, asc(products.id)],
-    limit,
-  });
+  const rows = await runQuery(() =>
+    db.query.products.findMany({
+      where: ne(products.slug, slug),
+      with: withRelations,
+      orderBy: [sql`${products.categoryId} = (${categoryId}) desc`, asc(products.id)],
+      limit,
+    }),
+  );
   return rows.map(toProduct);
 }

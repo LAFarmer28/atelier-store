@@ -1,7 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  // Lets the test suite run its own dev server next to a running `pnpm dev`
+  // (each dev server locks its build directory).
+  distDir: process.env.NEXT_DIST_DIR || ".next",
   // Don't advertise the framework in an X-Powered-By response header.
   poweredByHeader: false,
   cacheComponents: true,

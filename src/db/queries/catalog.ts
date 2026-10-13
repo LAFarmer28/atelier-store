@@ -3,7 +3,7 @@
 
 import "server-only";
 
-import { asc, eq, inArray, ne, sql } from "drizzle-orm";
+import { asc, desc, eq, inArray, ne, sql } from "drizzle-orm";
 import { cacheLife, cacheTag } from "next/cache";
 
 import { db } from "@/db";
@@ -98,6 +98,22 @@ async function getRelated(slug: string, categorySlug: string, limit: number) {
       where: ne(products.slug, slug),
       with: withRelations,
       orderBy: [sql`${products.categoryId} = (${categoryId}) desc`, asc(products.id)],
+      limit,
+    }),
+  );
+  return rows.map(toProduct);
+}
+
+/** The most recently added products, newest first. */
+export async function getLatestProducts(limit = 24): Promise<Product[]> {
+  "use cache";
+  cacheCatalog();
+
+  const rows = await runQuery(() =>
+    db.query.products.findMany({
+      with: withRelations,
+      // Products inserted together share created_at; the higher id is newer.
+      orderBy: [desc(products.createdAt), desc(products.id)],
       limit,
     }),
   );

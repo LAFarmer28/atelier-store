@@ -1,20 +1,23 @@
 {
-    "permissions": {
-        "allow": [
-            "Bash(pnpm build)",
-            "Bash(pnpm test *)",
-            "Bash(pnpm typecheck)",
-            "Bash(git status)",
-            "Bash(git diff *)"
-        ],
-        "ask": [
-            "Bash(git push *)"
-        ],
-        "deny": [
-            "Read(.env)",
-            "Read(.env.*)",
-            "Edit(.env)",
-            "Edit(.env.*"
-        ]
-    }
+  "permissions": {
+    "allow": [
+      "Bash(pnpm build)",
+      "Bash(pnpm test *)",
+      "Bash(pnpm typecheck)",
+      "Bash(git status)",
+      "Bash(git diff *)"
+    ],
+    "deny": [
+      "Read(.env)",
+      "Read(.env.*)",
+      "Edit(.env)",
+      "Edit(.env.*)"
+    ],
+    "ask": [
+      "Bash(git push *)"
+    ]
+  },
+  "enabledPlugins": {
+    "stripe@anthropic-plugin-directory": true
+  }
 }

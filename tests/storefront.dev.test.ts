@@ -84,3 +84,15 @@ describe("/", () => {
     assert.doesNotMatch(server.output(), /Failed query/);
   });
 });
+
+describe("/new-arrivals", () => {
+  test("renders the latest products and passes instant-navigation validation", async () => {
+    const { status, html } = await get("/new-arrivals");
+    assert.equal(status, 200);
+    assert.match(html, /<h1[^>]*>New arrivals<\/h1>/);
+    assert.match(html, /href="\/products\/[a-z0-9-]+"/);
+
+    await server.waitForValidation("/new-arrivals");
+    assert.doesNotMatch(server.validationOutput("/new-arrivals"), ANY_INSTANT_ERROR);
+  });
+});
